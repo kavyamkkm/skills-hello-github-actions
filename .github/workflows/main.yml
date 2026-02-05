@@ -1,0 +1,19 @@
+name: Main Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+
+jobs:
+  call-deploy:
+    uses: ./.github/workflows/demo.yml
+    with:
+      environment: ${{ inputs.environment }}
