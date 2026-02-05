@@ -34,3 +34,4 @@ jobs:
             echo "Running production deployment"
           else
             echo "Running non-production deployment"
+          fi
