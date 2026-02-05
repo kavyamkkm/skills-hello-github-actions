@@ -1,0 +1,36 @@
+name: Deploy Application
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        type: choice
+        default: dev
+        options:
+          - dev
+          - staging
+          - production
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+
+    # Optional: tie into GitHub Environments
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Show selected environment
+        run: echo "Deploying to ${{ inputs.environment }}"
+
+      - name: Environment-specific logic
+        run: |
+          if [ "${{ inputs.environment }}" = "production" ]; then
+            echo "Running production deployment"
+          else
+            echo "Running non-production deployment"
